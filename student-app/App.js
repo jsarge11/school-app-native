@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, TextInput, View, Button, Text } from 'react-native';
+import axios from 'axios';
 
 export default class App extends React.Component {
 
@@ -10,8 +11,10 @@ export default class App extends React.Component {
       PIN: ''
     }
   }
-  hello() {
-    console.log('this.hello');
+  login() {
+    axios.post('http://10.0.0.74:4000/auth/students', this.state).then(res => {
+      console.log('success');
+    }).catch(error => console.log(error.response.data))
   }
   render() {
     return (
@@ -28,7 +31,7 @@ export default class App extends React.Component {
         value={this.state.PIN}
         />
         <Button
-           onPress={() => this.hello()}
+           onPress={() => this.login()}
            title="Login"
            color="blue"
            accessibilityLabel="Login to the school app"
