@@ -6,16 +6,16 @@ export default class LoginScreen extends React.Component {
     constructor() {
         super();
         this.state = {
-          initials: '',
+          login: '',
           pin: ''
         }
       }
       login() {
         axios.post('http://10.0.0.74:4000/auth/classroom', this.state).then(res => {
           this.props.navigation.navigate('Home', {
-            teacherid: res.data.t_id
+            teacherid: res.data.clsr_id
           });
-          this.setState({ initials: '', pin: '' });
+          this.setState({ login: '', pin: '' });
         }).catch(error => Alert.alert(error.response.data))
       }
       render() {
@@ -24,8 +24,8 @@ export default class LoginScreen extends React.Component {
             <Text> Fluency Masters </Text>
             <TextInput
             style={styles.input}
-            onChangeText={(initials) => this.setState({initials})}
-            value={this.state.initials}
+            onChangeText={(login) => this.setState({login})}
+            value={this.state.login}
             />
             <TextInput
             style={styles.input}

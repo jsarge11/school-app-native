@@ -1,30 +1,45 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, Button, AlertIOS, Alert } from 'react-native'
 import axios from 'axios'
+
 
 export default class HomeScreen extends React.Component {
     state = {
-        students: []
+        students: [],
+        isDialogVisible: false
     }
     componentDidMount() {
        let teacher_id = this.props.navigation.getParam('teacherid');
 
         axios.get('http://10.0.0.74:4000/students?id=' + teacher_id).then(res => {
-            console.log(res.data)
-        // this.setState({ students: res.data })
+            this.setState({ students: res.data })
         })
     }
+    login = (item, pin) => {
+        axios.post('http://10.0.0.74:4000/auth/students', {id: item.st_id, PIN: pin}).then(res => {
+            Alert.alert('success');
+        }).catch(error => Alert.alert(error.response.data))
+    }
     render() {
-        // let students = this.state.students.map(item => {
-        //     return (
-        //         <Text>
-        //             {`${item.first_name} ${item.last_name}`}
-        //         </Text>
-        //     )
-        // })
+        let students = this.state.students.map(student => {
+            return (
+                <Button
+                key={student.st_id}
+                title={`${student.first_name} ${student.last_name}`}
+                onPress={() => AlertIOS.prompt(
+                            'Enter your PIN',
+                            null,
+                            pin => this.login(student, pin))
+                }
+                color="blue"
+                accessibilityLabel="Login to the school app"
+             />
+            )
+        })
+        console.log(typeof this.closeDialog);
         return (
             <View>
-                {/* {students} */}
+                {students}
             </View>
         )
     }
