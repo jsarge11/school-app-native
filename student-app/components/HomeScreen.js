@@ -17,7 +17,9 @@ export default class HomeScreen extends React.Component {
     }
     login = (item, pin) => {
         axios.post('http://10.0.0.74:4000/auth/students', {id: item.st_id, PIN: pin}).then(res => {
-            Alert.alert('success');
+            this.props.navigation.navigate('Courses', {
+                student: res.data
+            })
         }).catch(error => Alert.alert(error.response.data))
     }
     render() {
@@ -36,7 +38,7 @@ export default class HomeScreen extends React.Component {
              />
             )
         })
-        console.log(typeof this.closeDialog);
+
         return (
             <View>
                 {students}
