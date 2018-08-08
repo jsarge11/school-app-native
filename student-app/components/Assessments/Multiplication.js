@@ -18,7 +18,10 @@ render() {
             <Button
                 key={problem_set.ps_id}
                 title={problem_set.name}
-                onPress={() => console.log(problem_set.ps_id)}
+                onPress={() => this.props.navigation.navigate('Round', {
+                    type: 'multiplication',
+                    name: problem_set.name
+                })}
             />
         )
     })

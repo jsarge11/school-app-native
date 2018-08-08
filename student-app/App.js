@@ -11,6 +11,7 @@ import Multiplication from './components/Assessments/Multiplication';
 import Division from './components/Assessments/Division';
 import Addition from './components/Assessments/Addition';
 import Subtraction from './components/Assessments/Subtraction';
+import Round from './components/Assessments/Round/Round';
 
 const RootStack = createStackNavigator({
   Login: LoginScreen,
@@ -23,7 +24,8 @@ const RootStack = createStackNavigator({
   Multiplication: Multiplication,
   Division: Division,
   Addition: Addition,
-  Subtraction: Subtraction
+  Subtraction: Subtraction,
+  Round: Round
 });
 
 export default class App extends React.Component {
