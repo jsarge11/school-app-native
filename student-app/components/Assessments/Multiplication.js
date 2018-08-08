@@ -8,7 +8,7 @@ export default class Multiplication extends Component {
         problem_sets: [],
     }
 componentDidMount() {
-    axios.get('http://10.0.0.74:4000/math/problems?id=1').then(res => {
+    axios.get('http://10.0.0.74:4000/math/problemsets?id=1').then(res => {
         this.setState({ problem_sets: res.data })
     })
 }
@@ -19,8 +19,7 @@ render() {
                 key={problem_set.ps_id}
                 title={problem_set.name}
                 onPress={() => this.props.navigation.navigate('Round', {
-                    type: 'multiplication',
-                    name: problem_set.name
+                    type: '*',
                 })}
             />
         )

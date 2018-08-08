@@ -1,11 +1,21 @@
 import React, {Component} from 'react'
 import { View, Text, Alert, Button, StyleSheet } from 'react-native'
-
+import axios from 'axios'
 
 export default class Round extends Component {
 
 state = {
-    countdownNumber: 3
+    timer: 60,
+    countdownNumber: 3,
+    problems: [],
+    loading: true
+}
+componentDidMount() {
+    let type = this.props.navigation.getParam('type');
+
+    axios.get('http://10.0.0.74:4000/math/problems?operator=' + type).then(res => {
+        this.setState({ problems: res.data, loading: false })
+    })
 }
 
 countdown() {
@@ -15,21 +25,27 @@ countdown() {
             this.countdown();
         }
         else {
-            this.setState({ countdownNumber: 'Begin!'})
+            this.setState({ countdownNumber: 'Begin!'}, () => {
+                setTimeout(() => this.setState({ countdownNumber: '' }), 1000);
+                this.beginRound();
+            })
         }
     }, 1000);
 }
 
 beginRound() {
-    this.countdown();
+    console.log(this.state.problems.length);
+
 }
 render() {
         return (
            <View style={styles.container}>
+           {this.state.loading ? <Text> Loading ... </Text> :
             <Button
                 title="Start"
-                onPress={() => this.beginRound()}
+                onPress={() => this.countdown()}
             />
+            }
             <Text>{this.state.countdownNumber}</Text>
 
            </View>

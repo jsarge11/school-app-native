@@ -31,8 +31,6 @@ componentDidMount() {
 }
 
 render() {
-        console.log(this.state.student[0].assessments);
-
         let { multiplication, division, addition, subtraction } = this.state;
         return (
            <View style={styles.container}>
