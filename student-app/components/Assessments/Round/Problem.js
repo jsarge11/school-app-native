@@ -4,8 +4,32 @@ import { View, Text, TextInput, Alert, Button, StyleSheet } from 'react-native'
 
 export default class Problem extends Component {
 
+state = {
+    userInput: ""
+}
+handleInput = (text) => {
+    this.setState({ userInput: text}, () => {
+        let { userInput } = this.state;
+        let { answer } = this.props;
+        if (userInput.length === answer.toString().length) {
+
+            if (+userInput === +answer) {
+                this.props.gotItCorrect(userInput.length);
+            }
+            else {
+                this.props.gotItIncorrect();
+            }
+        this.props.selectProblem();
+        // this._textInput.clear();
+
+        }
+    })
+}
+clearText = () => {
+    this._textInput.setNativeProps({ text: ''});
+}
+
 render() {
-    console.log(this.props.input);
         return (
            <View style={styles.container}>
             <Text>
@@ -13,9 +37,12 @@ render() {
                   {this.props.problem.operator}
                   {this.props.problem.number2}
             </Text>
-            <TextInput style={styles.input}
-                       onChangeText={(text) => this.props.handleInput(text)}
-                       value={this.props.input}
+
+            <TextInput
+                       ref={component => this._textInput = component}
+                       style={styles.input}
+                       onChangeText={(text) => this.handleInput(text)}
+                       value={this.state.userInput}
                        maxLength={this.props.answer.length}
             />
            </View>

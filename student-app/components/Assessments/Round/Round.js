@@ -6,13 +6,14 @@ import Problem from './Problem';
 export default class Round extends Component {
 
 state = {
-    timer: 60,
+    timer: 20,
     countdownNumber: 3,
     problems: [],
     loading: true,
     problem: {number1: '', number2: '', operator: ''},
     answer: '',
-    input: ''
+    userInput: '',
+    score: 0
 }
 componentDidMount() {
     let type = this.props.navigation.getParam('type');
@@ -38,7 +39,20 @@ countdown() {
 }
 
 beginRound = () => {
-   this.selectProblem()
+   this.selectProblem();
+   this.setState({ score: 0 });
+   setTimeout(() => this.finishRound(), this.state.timer * 1000);
+}
+finishRound = () => {
+    Alert.alert('your score was ' + this.state.score);
+    this.setState({ score: 0 });
+    this.props.navigation.goBack();
+}
+gotItCorrect = (digits) => {
+    this.setState({ score: this.state.score + digits })
+}
+gotItIncorrect = () => {
+    this.setState({ incorrect: this.state.incorrect++ })
 }
 calculateAnswer = () => {
     let { number1, number2, operator } = this.state.problem;
@@ -66,27 +80,6 @@ selectProblem = () => {
     });
 
 }
-handleInput = (text) => {
-    this.setState({ input: text}, () => {
-        let { answer } = this.state;
-        if (text.length === answer.toString().length) {
-            console.log(typeof text, typeof answer);
-
-            if (+text === +answer) {
-                this.setState({ input: '' }, () => {
-                    Alert.alert('Correct!');
-                })
-            }
-            else {
-                this.setState({ input: '' }, () => {
-                    Alert.alert('Wrong!')
-                });
-            }
-        this.selectProblem();
-
-        }
-    })
-}
 render() {
         return (
            <View style={styles.container}>
@@ -99,9 +92,10 @@ render() {
             {this.state.countdownNumber
                 ? <Text>{this.state.countdownNumber}</Text> :
                   <Problem problem={this.state.problem}
-                           handleInput={this.handleInput}
-                           input={this.state.input}
                            answer={+this.state.answer}
+                           selectProblem={this.selectProblem}
+                           gotItCorrect={this.gotItCorrect}
+                           gotItIncorrect={this.gotItIncorrect}
                   />
             }
            </View>
