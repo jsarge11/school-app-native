@@ -6,14 +6,15 @@ import Problem from './Problem';
 export default class Round extends Component {
 
 state = {
-    timer: 60,
+    timer: 10,
     countdownNumber: 3,
     problems: [],
     loading: true,
     problem: {number1: '', number2: '', operator: ''},
     answer: '',
     userInput: '',
-    score: 0
+    score: 0,
+    incorrect: 0
 }
 componentDidMount() {
     let type = this.props.navigation.getParam('type');
@@ -44,15 +45,35 @@ beginRound = () => {
    setTimeout(() => this.finishRound(), this.state.timer * 1000);
 }
 finishRound = () => {
-    Alert.alert('your score was ' + this.state.score);
-    this.setState({ score: 0 });
-    this.props.navigation.goBack();
+    let { score, incorrect} = this.state;
+    let student = this.props.navigation.getParam('student');
+    let dateObj = new Date();
+    let month = dateObj.getUTCMonth() + 1; //months from 1-12
+	let day = dateObj.getUTCDate();
+	let year = dateObj.getUTCFullYear();
+    let date = month + '/' + day + '/' + year;
+   
+    let data = {
+        score: score,
+        incorrect: incorrect,
+        operator: this.props.navigation.getParam('type'),
+        number: this.props.navigation.getParam('number'),
+        date: date
+    }
+    console.log(data);
+
+    Alert.alert('your score was ' + score + ' and you got ' + incorrect + ' incorrect');
+    axios.post('http://10.0.0.176:4000/math/score?id=' + student[0].st_id, data).then(() => {
+        this.setState({ score: 0 });
+        this.props.navigation.goBack();
+    }).catch(() => Alert.alert('something went wrong, score not logged'))
+    
 }
 gotItCorrect = (digits) => {
     this.setState({ score: this.state.score + digits })
 }
 gotItIncorrect = () => {
-    this.setState({ incorrect: this.state.incorrect++ })
+    this.setState({ incorrect: this.state.incorrect + 1 })
 }
 calculateAnswer = () => {
     let { number1, number2, operator } = this.state.problem;

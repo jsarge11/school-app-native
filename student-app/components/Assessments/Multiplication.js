@@ -20,7 +20,8 @@ render() {
                 title={problem_set.name}
                 onPress={() => this.props.navigation.navigate('Round', {
                     type: '*',
-                    number: problem_set.number
+                    number: problem_set.number,
+                    student: this.props.navigation.getParam('student')
                 })}
             />
         )
