@@ -11,6 +11,12 @@ state = {
 handleInput = (text) => {
     const answerText = this.props.answer.toString();
     if(text.length === answerText.length) {
+        if (text === answerText) {
+            this.props.gotItCorrect(text.length);
+        }
+        else {
+            this.props.gotItIncorrect();
+        }
         this.clearText();
         this.props.selectProblem();
     }

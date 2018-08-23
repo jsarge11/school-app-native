@@ -6,7 +6,7 @@ import Problem from './Problem';
 export default class Round extends Component {
 
 state = {
-    timer: 20000,
+    timer: 60,
     countdownNumber: 3,
     problems: [],
     loading: true,
