@@ -5,20 +5,34 @@ import { View, Text, TextInput, Alert, Button, StyleSheet } from 'react-native'
 export default class Problem extends Component {
 
 state = {
-    userInput: ""
+    userInput: '',
+    counter: 0,
 }
+
 handleInput = (text) => {
-    let { answer } = this.props;
-    this.setState({ userInput: text}, () => {
-        if (+text === +answer) {
-            this.clearText();
-            this.props.selectProblem();
-        }
-    });
+    const answerText = this.props.answer.toString();
+    if(text.length === answerText.length) {
+        this.clearText();
+        this.props.selectProblem();
+    }
+    else {
+        this.setState({ userInput: text });
+    }
+    // let { answer } = this.props;
+    // this.setState({ userInput: text}, () => {
+    //     if (text.length === answer.toString().length) {
+    //         this.clearText();
+    //         this.props.selectProblem();
+    //     }
+    // });
 }
 clearText = () => {
-   console.log(this._textInput._lastNativeText);
-   this._textInput.clear();
+    setTimeout(() => {
+        this.setState(({counter}) => ({
+            userInput: '',
+            counter: counter + 1,
+        }));
+    }, 100);
 }
 
 render() {
@@ -30,14 +44,10 @@ render() {
                   {this.props.problem.number2}
             </Text>
 
-            <TextInput
-                       ref={component => this._textInput = component}
-                       style={styles.input}
-                       onChangeText={(text) => this.handleInput(text)}
-                       value={this.state.userInput}
-            />
-            <Button title="clickme"
-                    onPress={() => this.clearText()}
+            <TextInput key={this.state.counter}
+                style={styles.input}
+                onChangeText={(text) => this.handleInput(text)}
+                value={this.state.userInput}
             />
                     }
            </View>

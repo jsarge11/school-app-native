@@ -6,7 +6,7 @@ import Problem from './Problem';
 export default class Round extends Component {
 
 state = {
-    timer: 20,
+    timer: 20000,
     countdownNumber: 3,
     problems: [],
     loading: true,
@@ -18,7 +18,7 @@ state = {
 componentDidMount() {
     let type = this.props.navigation.getParam('type');
     let number = this.props.navigation.getParam('number');
-    axios.get('http://10.0.0.74:4000/math/problems?operator=' + type + '&number=' + number).then(res => {
+    axios.get('http://192.168.86.27:4000/math/problems?operator=' + type + '&number=' + number).then(res => {
         this.setState({ problems: res.data, loading: false })
     })
 }
