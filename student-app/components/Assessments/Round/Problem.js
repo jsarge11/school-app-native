@@ -8,25 +8,17 @@ state = {
     userInput: ""
 }
 handleInput = (text) => {
+    let { answer } = this.props;
     this.setState({ userInput: text}, () => {
-        let { userInput } = this.state;
-        let { answer } = this.props;
-        if (userInput.length === answer.toString().length) {
-
-            if (+userInput === +answer) {
-                this.props.gotItCorrect(userInput.length);
-            }
-            else {
-                this.props.gotItIncorrect();
-            }
-        this.props.selectProblem();
-        // this._textInput.clear();
-
+        if (+text === +answer) {
+            this.clearText();
+            this.props.selectProblem();
         }
-    })
+    });
 }
 clearText = () => {
-    this._textInput.setNativeProps({ text: ''});
+   console.log(this._textInput._lastNativeText);
+   this._textInput.clear();
 }
 
 render() {
@@ -43,8 +35,11 @@ render() {
                        style={styles.input}
                        onChangeText={(text) => this.handleInput(text)}
                        value={this.state.userInput}
-                       maxLength={this.props.answer.length}
             />
+            <Button title="clickme"
+                    onPress={() => this.clearText()}
+            />
+                    }
            </View>
         )
     }
