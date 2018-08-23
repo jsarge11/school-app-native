@@ -11,12 +11,12 @@ export default class HomeScreen extends React.Component {
     componentDidMount() {
        let teacher_id = this.props.navigation.getParam('teacherid');
 
-        axios.get('http://192.168.86.27:4000/students?id=' + teacher_id).then(res => {
+        axios.get('http://10.0.0.176:4000/students?id=' + teacher_id).then(res => {
             this.setState({ students: res.data })
         })
     }
     login = (item, pin) => {
-        axios.post('http://192.168.86.27:4000/auth/students', {id: item.st_id, PIN: pin}).then(res => {
+        axios.post('http://10.0.0.176:4000/auth/students', {id: item.st_id, PIN: pin}).then(res => {
             this.props.navigation.navigate('Courses', {
                 student: res.data
             })

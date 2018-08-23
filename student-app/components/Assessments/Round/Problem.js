@@ -5,7 +5,6 @@ import { View, Text, TextInput, Alert, Button, StyleSheet } from 'react-native'
 export default class Problem extends Component {
 
 state = {
-    userInput: '',
     counter: 0,
 }
 
@@ -15,23 +14,14 @@ handleInput = (text) => {
         this.clearText();
         this.props.selectProblem();
     }
-    else {
-        this.setState({ userInput: text });
-    }
-    // let { answer } = this.props;
-    // this.setState({ userInput: text}, () => {
-    //     if (text.length === answer.toString().length) {
-    //         this.clearText();
-    //         this.props.selectProblem();
-    //     }
-    // });
 }
 clearText = () => {
     setTimeout(() => {
         this.setState(({counter}) => ({
-            userInput: '',
             counter: counter + 1,
         }));
+        this._textInput.clear();
+        this._textInput.focus();
     }, 100);
 }
 
@@ -47,7 +37,7 @@ render() {
             <TextInput key={this.state.counter}
                 style={styles.input}
                 onChangeText={(text) => this.handleInput(text)}
-                value={this.state.userInput}
+                ref={component => this._textInput = component}
             />
                     }
            </View>
