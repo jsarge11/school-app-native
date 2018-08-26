@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import { View, Text, TextInput, Alert, Button, StyleSheet } from 'react-native'
+import { Hr } from 'react-native-hr'
 
 
 export default class Problem extends Component {
@@ -34,11 +35,12 @@ clearText = () => {
 render() {
         return (
            <View style={styles.container}>
-            <Text>
+            <Text style={styles.text}>
                   {this.props.problem.number1}{"\n"}
                   {this.props.problem.operator}
                   {this.props.problem.number2}
             </Text>
+            <Hr />
 
             <TextInput key={this.state.counter}
                 style={styles.input}
@@ -63,4 +65,8 @@ const styles = StyleSheet.create({
         borderColor: 'gray',
         borderWidth: 1,
         margin: 5
+    },
+    text: {
+        fontSize: 60,
+        textAlign: 'right'
     }})

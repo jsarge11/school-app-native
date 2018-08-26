@@ -11,7 +11,7 @@ export default class LoginScreen extends React.Component {
         }
       }
       login() {
-        axios.post('http://10.0.0.176:4000/auth/classroom', this.state).then(res => {
+        axios.post('http://192.168.0.15:4000/auth/classroom', this.state).then(res => {
           this.props.navigation.navigate('Home', {
             teacherid: res.data.clsr_id
           });

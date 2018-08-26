@@ -8,7 +8,7 @@ export default class Multiplication extends Component {
         problem_sets: [],
     }
 componentDidMount() {
-    axios.get('http://10.0.0.176:4000/math/problemsets?id=1').then(res => {
+    axios.get('http://192.168.0.15:4000/math/problemsets?id=1').then(res => {
         this.setState({ problem_sets: res.data })
     })
 }
