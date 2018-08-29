@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import { View, Text, TextInput, Alert, Button, StyleSheet } from 'react-native'
-import { Hr } from 'react-native-hr'
 
 
 export default class Problem extends Component {

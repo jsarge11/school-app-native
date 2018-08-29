@@ -7,22 +7,29 @@ export default class LoginScreen extends React.Component {
         super();
         this.state = {
           login: '',
-          pin: ''
+          pin: '',
+          loading: false,
         }
       }
       login() {
-        axios.post('http://192.168.0.15:4000/auth/classroom', this.state).then(res => {
+        this.setState({ loading: true })
+        axios.post('http://10.0.0.74:4000/auth/classroom', this.state).then(res => {
+
           this.props.navigation.navigate('Home', {
             teacherid: res.data.clsr_id
           });
-          this.setState({ login: '', pin: '' });
-        }).catch(error => Alert.alert(error.response.data))
+          this.setState({ login: '', pin: '', loading: false });
+        }).catch(error =>  {
+          Alert.alert(error.response.data);
+          this.setState({ loading: false })
+        })
       }
       render() {
         return (
           <View style={styles.container}>
             <Text> Fluency Masters </Text>
             <TextInput
+            autoCapitalize="none"
             style={styles.input}
             onChangeText={(login) => this.setState({login})}
             value={this.state.login}
@@ -31,13 +38,15 @@ export default class LoginScreen extends React.Component {
             style={styles.input}
             onChangeText={(pin) => this.setState({pin})}
             value={this.state.pin}
+            returnKeyType="go"
+            onSubmitEditing={() => this.login()}
             />
-            <Button
+            {!this.state.loading ? <Button
                onPress={() => this.login()}
                title="Login"
                color="blue"
                accessibilityLabel="Login to the school app"
-            > Login </Button>
+            > Login </Button> : <Text>Loading ... </Text>}
 
           </View>
         );

@@ -19,7 +19,7 @@ state = {
 componentDidMount() {
     let type = this.props.navigation.getParam('type');
     let number = this.props.navigation.getParam('number');
-    axios.get('http://192.168.0.15:4000/math/problems?operator=' + type + '&number=' + number).then(res => {
+    axios.get('http://10.0.0.74:4000/math/problems?operator=' + type + '&number=' + number).then(res => {
         this.setState({ problems: res.data, loading: false })
     })
 }
@@ -52,7 +52,7 @@ finishRound = () => {
 	let day = dateObj.getUTCDate();
 	let year = dateObj.getUTCFullYear();
     let date = month + '/' + day + '/' + year;
-   
+
     let data = {
         score: score,
         incorrect: incorrect,
@@ -63,11 +63,11 @@ finishRound = () => {
     console.log(data);
 
     Alert.alert('your score was ' + score + ' and you got ' + incorrect + ' incorrect');
-    axios.post('http://192.168.0.15:4000/math/score?id=' + student[0].st_id, data).then(() => {
+    axios.post('http://10.0.0.74:4000/math/score?id=' + student[0].st_id, data).then(() => {
         this.setState({ score: 0 });
         this.props.navigation.goBack();
     }).catch(() => Alert.alert('something went wrong, score not logged'))
-    
+
 }
 gotItCorrect = (digits) => {
     this.setState({ score: this.state.score + digits })
