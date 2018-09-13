@@ -2,6 +2,7 @@ import React from 'react'
 import { StyleSheet, TextInput, View, Button, Text, Alert } from 'react-native';
 import axios from 'axios'
 
+
 export default class LoginScreen extends React.Component {
     constructor() {
         super();
@@ -46,7 +47,7 @@ export default class LoginScreen extends React.Component {
                title="Login"
                color="blue"
                accessibilityLabel="Login to the school app"
-            > Login </Button> : <Text>Loading ... </Text>}
+            > Login </Button> : <Text> Loading ... </Text>}
 
           </View>
         );

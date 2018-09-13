@@ -39,8 +39,6 @@ render() {
                   {this.props.problem.operator}
                   {this.props.problem.number2}
             </Text>
-            <Hr />
-
             <TextInput key={this.state.counter}
                 style={styles.input}
                 onChangeText={(text) => this.handleInput(text)}

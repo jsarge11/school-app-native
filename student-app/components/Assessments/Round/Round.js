@@ -6,7 +6,7 @@ import Problem from './Problem';
 export default class Round extends Component {
 
 state = {
-    timer: 60,
+    timer: 10,
     countdownNumber: 3,
     problems: [],
     loading: true,
@@ -14,7 +14,9 @@ state = {
     answer: '',
     userInput: '',
     score: 0,
-    incorrect: 0
+    incorrect: 0,
+    startButtonVisible: true,
+    timerIDs: []
 }
 componentDidMount() {
     let type = this.props.navigation.getParam('type');
@@ -25,13 +27,14 @@ componentDidMount() {
 }
 
 countdown() {
+    this.setState({ startButtonVisible: false });
     setTimeout(() => {
         this.setState({ countdownNumber: this.state.countdownNumber - 1 });
         if (this.state.countdownNumber > 0) {
             this.countdown();
         }
         else {
-            this.setState({ countdownNumber: 'Begin!'}, () => {
+            this.setState({ countdownNumber: 'Begin!' }, () => {
                 setTimeout(() => this.setState({ countdownNumber: '' }), 1000);
                 this.beginRound();
             })
@@ -42,7 +45,10 @@ countdown() {
 beginRound = () => {
    this.selectProblem();
    this.setState({ score: 0 });
-   setTimeout(() => this.finishRound(), this.state.timer * 1000);
+   let id = setTimeout(() => this.finishRound(), this.state.timer * 1000);
+   let newArr = this.state.timerIDs.slice();
+   newArr.push(id);
+   this.setState({ timerIDs: newArr})
 }
 finishRound = () => {
     let { score, incorrect} = this.state;
@@ -101,14 +107,26 @@ selectProblem = () => {
     });
 
 }
+componentWillUnmount() {
+   this.state.timerIDs.forEach(item => {
+    clearImmediate(item);
+   })
+}
 render() {
+
+
         return (
            <View style={styles.container}>
            {this.state.loading ? <Text> Loading ... </Text> :
-            <Button
-                title="Start"
-                onPress={() => this.countdown()}
-            />
+            <View>
+               {this.state.startButtonVisible ? <Button
+                    style={{ fontSize: 100 }}
+                    title="Start"
+                    onPress={() => this.countdown() }
+                />
+                :
+                ''}
+            </View>
             }
             {this.state.countdownNumber
                 ? <Text>{this.state.countdownNumber}</Text> :
@@ -123,6 +141,7 @@ render() {
         )
     }
 }
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -136,4 +155,5 @@ const styles = StyleSheet.create({
         borderColor: 'gray',
         borderWidth: 1,
         margin: 5
-    }})
+    },
+})
