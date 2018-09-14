@@ -16,7 +16,8 @@ state = {
     score: 0,
     incorrect: 0,
     startButtonVisible: true,
-    timerIDs: []
+    timerIDs: [],
+    containerColor: '#fff'
 }
 componentDidMount() {
     let type = this.props.navigation.getParam('type');
@@ -34,7 +35,7 @@ countdown() {
             this.countdown();
         }
         else {
-            this.setState({ countdownNumber: 'Begin!' }, () => {
+            this.setState({ countdownNumber: 'Go!' }, () => {
                 setTimeout(() => this.setState({ countdownNumber: '' }), 1000);
                 this.beginRound();
             })
@@ -66,7 +67,6 @@ finishRound = () => {
         number: this.props.navigation.getParam('number'),
         date: date
     }
-    console.log(data);
 
     Alert.alert('your score was ' + score + ' and you got ' + incorrect + ' incorrect');
     axios.post('http://10.0.0.74:4000/math/score?id=' + student[0].st_id, data).then(() => {
@@ -76,10 +76,12 @@ finishRound = () => {
 
 }
 gotItCorrect = (digits) => {
-    this.setState({ score: this.state.score + digits })
+    this.setState({ score: this.state.score + digits, containerColor: '#008000' });
+    setTimeout(() => this.setState({ containerColor: '#fff'}), 500);
 }
 gotItIncorrect = () => {
-    this.setState({ incorrect: this.state.incorrect + 1 })
+    this.setState({ incorrect: this.state.incorrect + 1, containerColor: '#ff0000' });
+    setTimeout(() => this.setState({ containerColor: '#fff'}), 500);
 }
 calculateAnswer = () => {
     let { number1, number2, operator } = this.state.problem;
@@ -107,20 +109,28 @@ selectProblem = () => {
     });
 
 }
+
+containerStyle = (color) => {
+    return {
+        flex: 1,
+        backgroundColor: color,
+        alignItems: 'center',
+        justifyContent: 'center',
+    }
+}
 componentWillUnmount() {
    this.state.timerIDs.forEach(item => {
-    clearImmediate(item);
+    clearTimeout(item);
    })
 }
+
+
 render() {
-
-
         return (
-           <View style={styles.container}>
+           <View style={this.containerStyle(this.state.containerColor)}>
            {this.state.loading ? <Text> Loading ... </Text> :
             <View>
                {this.state.startButtonVisible ? <Button
-                    style={{ fontSize: 100 }}
                     title="Start"
                     onPress={() => this.countdown() }
                 />
@@ -129,7 +139,7 @@ render() {
             </View>
             }
             {this.state.countdownNumber
-                ? <Text>{this.state.countdownNumber}</Text> :
+                ? <Text style={styles.countDownText}>{this.state.countdownNumber}</Text> :
                   <Problem problem={this.state.problem}
                            answer={+this.state.answer}
                            selectProblem={this.selectProblem}
@@ -143,12 +153,6 @@ render() {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
     input: {
         height: 40,
         width: 100,
@@ -156,4 +160,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         margin: 5
     },
+    countDownText: {
+        fontSize: 200
+    }
 })
