@@ -1,12 +1,12 @@
 import React, {Component} from 'react'
-import { View, Text, Alert, Button, StyleSheet } from 'react-native'
+import { View, Text, Alert, Button, StyleSheet, Image } from 'react-native'
 import axios from 'axios'
 import Problem from './Problem';
 
 export default class Round extends Component {
 
 state = {
-    timer: 10,
+    timer: 60,
     countdownNumber: 3,
     problems: [],
     loading: true,
@@ -124,17 +124,54 @@ componentWillUnmount() {
     clearTimeout(item);
    })
 }
+numberSwitch(num) {
+    let imagePath;
+    switch (num) {
+        case('1') :
+        imagePath = require('../../../numbers/number1.gif')
+        return imagePath;
+        case('2') :
+        imagePath = require('../../../numbers/number2.gif')
+        return imagePath;
+        case('3') :
+        imagePath = require('../../../numbers/number3.gif')
+        return imagePath;
+        case('4') :
+        imagePath = require('../../../numbers/number4.gif')
+        return imagePath;
+        case('5') :
+        imagePath = require('../../../numbers/number5.gif')
+        return imagePath;
+        case('6') :
+        imagePath = require('../../../numbers/number6.gif')
+        return imagePath;
+        case('7') :
+        imagePath = require('../../../numbers/number7.gif')
+        return imagePath;
+        case('8') :
+        imagePath = require('../../../numbers/number8.gif')
+        return imagePath;
+        case('9') :
+        imagePath = require('../../../numbers/number9.gif')
+        return imagePath;
+    }
+}
 
 
 render() {
+        let path = this.numberSwitch(this.props.navigation.getParam('number'));
         return (
            <View style={this.containerStyle(this.state.containerColor)}>
            {this.state.loading ? <Text> Loading ... </Text> :
             <View>
-               {this.state.startButtonVisible ? <Button
+               {this.state.startButtonVisible ?
+               <View>
+                 <Image style={styles.images} source={path}/>
+                <Button
                     title="Start"
                     onPress={() => this.countdown() }
                 />
+                </View>
                 :
                 ''}
             </View>
@@ -142,8 +179,8 @@ render() {
             {this.state.countdownNumber
                 ?
                   this.state.countdownNumbersVisible ?
-                    <Text style={styles.countDownText}>{this.state.countdownNumber}
-
+                    <Text style={styles.countDownText}>
+                        {this.state.countdownNumber}
                     </Text>
                     :
                     ''
@@ -170,5 +207,9 @@ const styles = StyleSheet.create({
     },
     countDownText: {
         fontSize: 200
+    },
+    images: {
+        height: 100,
+        width: 100
     }
 })

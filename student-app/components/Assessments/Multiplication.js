@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import { View, Text, Alert, Button, StyleSheet } from 'react-native'
+import { View, Text, Alert, Button, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import axios from 'axios'
 
 
@@ -14,16 +14,55 @@ componentDidMount() {
 }
 render() {
     let problem_sets = this.state.problem_sets.map(problem_set => {
+        var imagePath;
+        console.log(typeof problem_set.number, problem_set.number);
+        switch(problem_set.number) {
+            case('1') :
+                imagePath = require('../../numbers/number1.gif')
+                break;
+            case('2') :
+                imagePath = require('../../numbers/number2.gif')
+                break;
+            case('3') :
+                imagePath = require('../../numbers/number3.gif')
+                break;
+            case('4') :
+                imagePath = require('../../numbers/number4.gif')
+                break;
+            case('5') :
+                imagePath = require('../../numbers/number5.gif')
+                break;
+            case('6') :
+                imagePath = require('../../numbers/number6.gif')
+                break;
+            case('7') :
+                imagePath = require('../../numbers/number7.gif')
+                break;
+            case('8') :
+                imagePath = require('../../numbers/number8.gif')
+                break;
+            case('9') :
+                imagePath = require('../../numbers/number9.gif')
+                break;
+            default :
+                imagePath = require('../../numbers/number0.gif')
+                break;
+
+        }
         return (
-            <Button
-                key={problem_set.ps_id}
-                title={problem_set.name}
-                onPress={() => this.props.navigation.navigate('Round', {
-                    type: '*',
-                    number: problem_set.number,
-                    student: this.props.navigation.getParam('student')
-                })}
-            />
+            <View key={problem_set.ps_id}>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate('Round', {
+                        type: '*',
+                        number: problem_set.number,
+                        student: this.props.navigation.getParam('student'),
+                        imagePath: imagePath
+                    })}>
+
+                    <Image style={styles.images} source={imagePath}/>
+
+                <Text> {problem_set.name} </Text>
+                </TouchableOpacity>
+            </View>
         )
     })
         return (
@@ -42,4 +81,9 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
-}})
+    },
+    images: {
+        height: 70,
+        width: 70
+    }
+})
