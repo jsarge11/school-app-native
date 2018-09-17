@@ -27,6 +27,7 @@ export default class LoginScreen extends React.Component {
       }
       render() {
         return (
+
           <View style={styles.container}>
             <Text> Fluency Masters </Text>
             <TextInput
@@ -67,5 +68,9 @@ export default class LoginScreen extends React.Component {
         borderColor: 'gray',
         borderWidth: 1,
         margin: 5
+      },
+      images: {
+        height: 300,
+        width: 300
       }
     });

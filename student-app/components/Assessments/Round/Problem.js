@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import { View, Text, TextInput, Alert, Button, StyleSheet } from 'react-native'
+import { View, Text, TextInput, Alert, Button, StyleSheet, Image, TouchableOpacity } from 'react-native'
 
 
 export default class Problem extends Component {
@@ -44,6 +44,38 @@ render() {
                 onChangeText={(text) => this.handleInput(text)}
                 ref={component => this._textInput = component}
             />
+            <View style={styles.numberContainer}>
+            <TouchableOpacity>
+                <Image style={styles.images} source={require('../../../numbers/number0.gif')}/>
+            </TouchableOpacity>
+            <TouchableOpacity>
+                <Image style={styles.images} source={require('../../../numbers/number1.gif')}/>
+            </TouchableOpacity>
+            <TouchableOpacity>
+                <Image style={styles.images} source={require('../../../numbers/number2.gif')}/>
+            </TouchableOpacity>
+            <TouchableOpacity>
+                <Image style={styles.images} source={require('../../../numbers/number3.gif')}/>
+            </TouchableOpacity>
+            <TouchableOpacity>
+                <Image style={styles.images} source={require('../../../numbers/number4.gif')}/>
+            </TouchableOpacity>
+            <TouchableOpacity>
+                <Image style={styles.images} source={require('../../../numbers/number5.gif')}/>
+            </TouchableOpacity>
+            <TouchableOpacity>
+                <Image style={styles.images} source={require('../../../numbers/number6.gif')}/>
+            </TouchableOpacity>
+            <TouchableOpacity>
+                <Image style={styles.images} source={require('../../../numbers/number7.gif')}/>
+            </TouchableOpacity>
+            <TouchableOpacity>
+                <Image style={styles.images} source={require('../../../numbers/number8.gif')}/>
+            </TouchableOpacity>
+            <TouchableOpacity>
+                <Image style={styles.images} source={require('../../../numbers/number9.gif')}/>
+            </TouchableOpacity>
+            </View>
                     }
            </View>
         )
@@ -56,6 +88,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    numberContainer: {
+        flex: 1,
+        flexDirection: 'row'
+    },
     input: {
         height: 40,
         width: 100,
@@ -66,4 +102,8 @@ const styles = StyleSheet.create({
     text: {
         fontSize: 60,
         textAlign: 'right'
+    },
+    images: {
+        height: 100,
+        width: 100
     }})

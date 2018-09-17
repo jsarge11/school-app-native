@@ -16,6 +16,7 @@ state = {
     score: 0,
     incorrect: 0,
     startButtonVisible: true,
+    countdownNumbersVisible: false,
     timerIDs: [],
     containerColor: '#fff'
 }
@@ -28,7 +29,7 @@ componentDidMount() {
 }
 
 countdown() {
-    this.setState({ startButtonVisible: false });
+    this.setState({ startButtonVisible: false, countdownNumbersVisible: true });
     setTimeout(() => {
         this.setState({ countdownNumber: this.state.countdownNumber - 1 });
         if (this.state.countdownNumber > 0) {
@@ -77,11 +78,11 @@ finishRound = () => {
 }
 gotItCorrect = (digits) => {
     this.setState({ score: this.state.score + digits, containerColor: '#008000' });
-    setTimeout(() => this.setState({ containerColor: '#fff'}), 500);
+    setTimeout(() => this.setState({ containerColor: '#fff'}), 100);
 }
 gotItIncorrect = () => {
     this.setState({ incorrect: this.state.incorrect + 1, containerColor: '#ff0000' });
-    setTimeout(() => this.setState({ containerColor: '#fff'}), 500);
+    setTimeout(() => this.setState({ containerColor: '#fff'}), 100);
 }
 calculateAnswer = () => {
     let { number1, number2, operator } = this.state.problem;
@@ -139,7 +140,14 @@ render() {
             </View>
             }
             {this.state.countdownNumber
-                ? <Text style={styles.countDownText}>{this.state.countdownNumber}</Text> :
+                ?
+                  this.state.countdownNumbersVisible ?
+                    <Text style={styles.countDownText}>{this.state.countdownNumber}
+
+                    </Text>
+                    :
+                    ''
+                :
                   <Problem problem={this.state.problem}
                            answer={+this.state.answer}
                            selectProblem={this.selectProblem}
