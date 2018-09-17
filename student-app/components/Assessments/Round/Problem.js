@@ -90,7 +90,8 @@ const styles = StyleSheet.create({
     },
     numberContainer: {
         flex: 1,
-        flexDirection: 'row'
+        flexDirection: 'row',
+        flexWrap: 'wrap'
     },
     input: {
         height: 40,
@@ -104,6 +105,6 @@ const styles = StyleSheet.create({
         textAlign: 'right'
     },
     images: {
-        height: 100,
-        width: 100
+        height: 60,
+        width: 60
     }})

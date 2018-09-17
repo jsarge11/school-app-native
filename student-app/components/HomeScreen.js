@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, Button, AlertIOS, Alert } from 'react-native'
+import { View, Text, Button, AlertIOS, Alert, StyleSheet } from 'react-native'
 import axios from 'axios'
 
 
@@ -40,9 +40,16 @@ export default class HomeScreen extends React.Component {
         })
 
         return (
-            <View>
+            <View style={styles.container}>
                 {students}
             </View>
         )
     }
 }
+
+let styles = StyleSheet.create({
+    container: {
+        flex: 2,
+
+    }
+})
