@@ -5,21 +5,30 @@ import { View, Text, TextInput, Alert, Button, StyleSheet, Image, TouchableOpaci
 export default class Problem extends Component {
 
 state = {
+    userAnswer: '',
     counter: 0,
 }
 
-handleInput = (text) => {
-    const answerText = this.props.answer.toString();
-    if(text.length === answerText.length) {
-        if (text === answerText) {
-            this.props.gotItCorrect(text.length);
-        }
-        else {
-            this.props.gotItIncorrect();
-        }
-        this.clearText();
-        this.props.selectProblem();
+handleInput = (num) => {
+   let { userAnswer } = this.state;
+   let input = userAnswer + num;
+   this.setState({ userAnswer: input })
+}
+evaluate = () => {
+    let { answer } = this.props;
+    let stringAnswer = answer.toString();
+    let { userAnswer } = this.state;
+    if (stringAnswer.length === userAnswer.length) {
+       if (stringAnswer == userAnswer) {
+           this.props.gotItCorrect(stringAnswer.length);
+       }
+       else {
+           this.props.gotItIncorrect();
+       }
+       this.props.selectProblem();
+       this.setState({ userAnswer: '' });
     }
+
 }
 clearText = () => {
     setTimeout(() => {
@@ -32,6 +41,7 @@ clearText = () => {
 }
 
 render() {
+        this.evaluate();
         return (
            <View style={styles.container}>
             <Text style={styles.text}>
@@ -41,38 +51,38 @@ render() {
             </Text>
             <TextInput key={this.state.counter}
                 style={styles.input}
-                onChangeText={(text) => this.handleInput(text)}
-                ref={component => this._textInput = component}
+                value={this.state.userAnswer}
+                editable={false}
             />
             <View style={styles.numberContainer}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => this.handleInput('0')}>
                 <Image style={styles.images} source={require('../../../numbers/number0.gif')}/>
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => this.handleInput('1')}>
                 <Image style={styles.images} source={require('../../../numbers/number1.gif')}/>
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => this.handleInput('2')}>
                 <Image style={styles.images} source={require('../../../numbers/number2.gif')}/>
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => this.handleInput('3')}>
                 <Image style={styles.images} source={require('../../../numbers/number3.gif')}/>
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => this.handleInput('4')}>
                 <Image style={styles.images} source={require('../../../numbers/number4.gif')}/>
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => this.handleInput('5')}>
                 <Image style={styles.images} source={require('../../../numbers/number5.gif')}/>
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => this.handleInput('6')}>
                 <Image style={styles.images} source={require('../../../numbers/number6.gif')}/>
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => this.handleInput('7')}>
                 <Image style={styles.images} source={require('../../../numbers/number7.gif')}/>
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => this.handleInput('8')}>
                 <Image style={styles.images} source={require('../../../numbers/number8.gif')}/>
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => this.handleInput('9')}>
                 <Image style={styles.images} source={require('../../../numbers/number9.gif')}/>
             </TouchableOpacity>
             </View>
