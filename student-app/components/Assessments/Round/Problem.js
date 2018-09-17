@@ -26,7 +26,7 @@ evaluate = () => {
            this.props.gotItIncorrect();
        }
        this.props.selectProblem();
-       this.setState({ userAnswer: '' });
+       setTimeout(() => this.setState({ userAnswer: '' }), 100);
     }
 
 }

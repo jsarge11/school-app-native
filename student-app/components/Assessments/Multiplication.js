@@ -50,40 +50,46 @@ render() {
 
         }
         return (
-            <View key={problem_set.ps_id}>
-                <TouchableOpacity onPress={() => this.props.navigation.navigate('Round', {
+                <TouchableOpacity style={styles.touchableArea} key={problem_set.ps_id} onPress={() => this.props.navigation.navigate('Round', {
                         type: '*',
                         number: problem_set.number,
                         student: this.props.navigation.getParam('student'),
                         imagePath: imagePath
                     })}>
 
-                    <Image style={styles.images} source={imagePath}/>
+                        <Image style={styles.images} source={imagePath}/>
 
-                <Text> {problem_set.name} </Text>
+                    <Text style={{textAlign: 'center'}}> {problem_set.name} </Text>
                 </TouchableOpacity>
-            </View>
         )
     })
         return (
            <View style={styles.container}>
-            <Text>Multiplication</Text>
-            {problem_sets}
+            <Text style={{fontSize: 50, marginBottom: 50}}>Multiplication</Text>
+            <View style={styles.numberContainer} >
+                {problem_sets}
+            </View>
            </View>
         )
     }
 }
 const styles = StyleSheet.create({
     container: {
-        flex: 2,
-        flexDirection: 'row',
+        flex: 1,
         flexWrap: 'wrap',
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
     },
+    numberContainer: {
+        flex: 1,
+        flexDirection: 'row',
+    },
     images: {
         height: 70,
         width: 70
+    },
+    touchableArea: {
+        height: 90
     }
 })
