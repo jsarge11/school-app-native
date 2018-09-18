@@ -7,12 +7,16 @@ export default class Problem extends Component {
 state = {
     userAnswer: '',
     counter: 0,
+    isScrambled: false
 }
 
 handleInput = (num) => {
    let { userAnswer } = this.state;
    let input = userAnswer + num;
-   this.setState({ userAnswer: input })
+   this.setState({ userAnswer: input }, () => {
+    this.evaluate();
+   })
+
 }
 evaluate = () => {
     let { answer } = this.props;
@@ -26,28 +30,38 @@ evaluate = () => {
            this.props.gotItIncorrect();
        }
        this.props.selectProblem();
+       this.scramble();
        setTimeout(() => this.setState({ userAnswer: '' }), 100);
     }
 
 }
-clearText = () => {
-    setTimeout(() => {
-        this.setState(({counter}) => ({
-            counter: counter + 1,
-        }));
-        this._textInput.clear();
-        this._textInput.focus();
-    }, 100);
+scramble() {
+    let { operator } = this.props.problem;
+    if (operator === '*' || operator === '+') {
+        let random = Math.floor(Math.random() * 2);
+        if (random === 1) {
+            this.setState({ isScrambled: true})
+        }
+        else {
+           this.setState({ isScrambled: false})
+        }
+    }
+    else {
+        this.setState({ isScrambled: true})
+    }
 }
-
 render() {
-        this.evaluate();
+
+        let { number1, number2, operator } = this.props.problem;
+        let { isScrambled } = this.state;
+
         return (
            <View style={styles.container}>
             <Text style={styles.text}>
-                  {this.props.problem.number1}{"\n"}
-                  {this.props.problem.operator}
-                  {this.props.problem.number2}
+
+            {isScrambled ? number2 : number1}{"\n"}
+            {operator === '*' ? 'x' : operator}
+            {isScrambled ? number1 : number2}
             </Text>
             <TextInput key={this.state.counter}
                 style={styles.input}
