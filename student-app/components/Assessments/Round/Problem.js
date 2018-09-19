@@ -37,30 +37,36 @@ evaluate = () => {
 }
 scramble() {
     let { operator } = this.props.problem;
+    console.log(operator);
     if (operator === '*' || operator === '+') {
         let random = Math.floor(Math.random() * 2);
         if (random === 1) {
-            this.setState({ isScrambled: true})
+            this.setState({ isScrambled: false})
         }
         else {
-           this.setState({ isScrambled: false})
+           this.setState({ isScrambled: true})
         }
     }
     else {
-        this.setState({ isScrambled: true})
+        this.setState({ isScrambled: false})
     }
 }
 render() {
-
         let { number1, number2, operator } = this.props.problem;
         let { isScrambled } = this.state;
+        if (operator === '*') {
+            operator = 'x';
+        }
+        else if (operator === '/') {
+            operator = '÷';
+        }
 
         return (
            <View style={styles.container}>
             <Text style={styles.text}>
 
             {isScrambled ? number2 : number1}{"\n"}
-            {operator === '*' ? 'x' : operator}
+            {operator}
             {isScrambled ? number1 : number2}
             </Text>
             <TextInput key={this.state.counter}

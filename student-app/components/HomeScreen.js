@@ -50,6 +50,5 @@ export default class HomeScreen extends React.Component {
 let styles = StyleSheet.create({
     container: {
         flex: 2,
-
     }
 })

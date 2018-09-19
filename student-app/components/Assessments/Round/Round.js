@@ -21,9 +21,13 @@ state = {
     containerColor: '#fff'
 }
 componentDidMount() {
-    let type = this.props.navigation.getParam('type');
+    let operator = this.props.navigation.getParam('operator');
     let number = this.props.navigation.getParam('number');
-    axios.get('http://10.0.0.74:4000/math/problems?operator=' + type + '&number=' + number).then(res => {
+    if (operator === '+') {
+        operator = 'plus';
+    }
+    axios.get('http://10.0.0.74:4000/math/problems?operator=' + operator + '&number=' + number).then(res => {
+        console.log(res.data);
         this.setState({ problems: res.data, loading: false })
     })
 }
@@ -47,6 +51,7 @@ countdown() {
 beginRound = () => {
    this.selectProblem();
    this.setState({ score: 0 });
+   // setting timerID to cancel if back button is pushed
    let id = setTimeout(() => this.finishRound(), this.state.timer * 1000);
    let newArr = this.state.timerIDs.slice();
    newArr.push(id);
@@ -64,7 +69,7 @@ finishRound = () => {
     let data = {
         score: score,
         incorrect: incorrect,
-        operator: this.props.navigation.getParam('type'),
+        operator: this.props.navigation.getParam('operator'),
         number: this.props.navigation.getParam('number'),
         date: date
     }
@@ -86,6 +91,7 @@ gotItIncorrect = () => {
 }
 calculateAnswer = () => {
     let { number1, number2, operator } = this.state.problem;
+
     switch(operator) {
         case('*'):
             this.setState({ answer: number1 * number2 })
@@ -104,7 +110,8 @@ calculateAnswer = () => {
     }
 }
 selectProblem = () => {
-    let number = Math.floor(Math.random() * 12);
+    let number = Math.floor(Math.random() * 9);
+
     this.setState({ problem: this.state.problems[number]}, () => {
         this.calculateAnswer();
     });

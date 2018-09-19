@@ -37,26 +37,34 @@ render() {
             <Text>Assessments</Text>
             {multiplication ? <Button
                 title="Multiplication"
-                onPress={() => this.props.navigation.navigate('Multiplication', {
-                    student: this.props.navigation.getParam('student')
+                onPress={() => this.props.navigation.navigate('Assessment', {
+                    student: this.props.navigation.getParam('student'),
+                    type: 'Multiplication',
+                    operator: '*'
                 })}
             /> : ''}
             {division ? <Button
                 title="Division"
-                onPress={() => this.props.navigation.navigate('Division', {
-                    student: this.props.navigation.getParam('student')
+                onPress={() => this.props.navigation.navigate('Assessment', {
+                    student: this.props.navigation.getParam('student'),
+                    type: 'Division',
+                    operator: '/'
                 })}
             /> : ''}
             {addition ? <Button
                 title="Addition"
-                onPress={() => this.props.navigation.navigate('Addition', {
-                    student: this.props.navigation.getParam('student')
+                onPress={() => this.props.navigation.navigate('Assessment', {
+                    student: this.props.navigation.getParam('student'),
+                    type: 'Addition',
+                    operator: '+'
                 })}
             /> : ''}
             {subtraction ? <Button
                 title="Subtraction"
-                onPress={() => this.props.navigation.navigate('Subtraction', {
-                    student: this.props.navigation.getParam('student')
+                onPress={() => this.props.navigation.navigate('Assessment', {
+                    student: this.props.navigation.getParam('student'),
+                    type: 'Subtraction',
+                    operator: '-'
                 })}
             /> : ''}
            </View>
