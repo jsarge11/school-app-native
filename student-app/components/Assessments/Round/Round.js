@@ -26,7 +26,6 @@ componentDidMount() {
     if (operator === '+') {
         operator = 'plus';
     }
-    console.log(operator, number);
     axios.get('http://10.0.0.74:4000/math/problems?operator=' + operator + '&number=' + number).then(res => {
         console.log(res.data);
         this.setState({ problems: res.data, loading: false })
@@ -92,7 +91,6 @@ gotItIncorrect = () => {
 }
 calculateAnswer = () => {
     let { number1, number2, operator } = this.state.problem;
-    console.log(number1, number2, operator);
 
     switch(operator) {
         case('*'):
