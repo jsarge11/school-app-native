@@ -51,7 +51,7 @@ scramble() {
     }
 }
 render() {
-
+        console.log(this.props.problem);
         let { number1, number2, operator } = this.props.problem;
         let { isScrambled } = this.state;
 

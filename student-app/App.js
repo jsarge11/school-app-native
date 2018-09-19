@@ -5,12 +5,9 @@ import HomeScreen from './components/HomeScreen';
 import Courses from './components/Courses/Courses';
 import MathFluency from './components/Courses/MathFluency';
 import Assessments from './components/Assessments/Assessments';
+import Assessment from './components/Assessments/Assessment/Assessment'
 import Practice from './components/Practice/Practice';
 import Scores from './components/Scores/Scores';
-import Multiplication from './components/Assessments/Multiplication';
-import Division from './components/Assessments/Division';
-import Addition from './components/Assessments/Addition';
-import Subtraction from './components/Assessments/Subtraction';
 import Round from './components/Assessments/Round/Round';
 
 const RootStack = createStackNavigator({
@@ -21,10 +18,7 @@ const RootStack = createStackNavigator({
   Practice: Practice,
   Scores: Scores,
   Assessments: Assessments,
-  Multiplication: Multiplication,
-  Division: Division,
-  Addition: Addition,
-  Subtraction: Subtraction,
+  Assessment: Assessment,
   Round: Round
 });
 

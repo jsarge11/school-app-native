@@ -3,55 +3,71 @@ import { View, Text, Alert, Button, StyleSheet, Image, TouchableOpacity } from '
 import axios from 'axios'
 
 
-export default class Multiplication extends Component {
+export default class Assessment extends Component {
     state = {
         problem_sets: [],
+        type: this.props.navigation.getParam('type'),
+        operator: this.props.navigation.getParam('operator')
     }
 componentDidMount() {
-    axios.get('http://10.0.0.74:4000/math/problemsets?id=1').then(res => {
+    let id;
+    switch(this.state.operator) {
+        case('*'):
+        id = 1;
+        break;
+        case('/'):
+        id = 2;
+        break;
+        case('+'):
+        id = 3;
+        break;
+        case('-'):
+        id = 5;
+        break;
+    }
+    axios.get('http://10.0.0.74:4000/math/problemsets?id=' + id).then(res => {
         this.setState({ problem_sets: res.data })
     })
 }
 render() {
     let problem_sets = this.state.problem_sets.map(problem_set => {
         var imagePath;
-        console.log(typeof problem_set.number, problem_set.number);
         switch(problem_set.number) {
             case('1') :
-                imagePath = require('../../numbers/number1.gif')
+                imagePath = require('../../../numbers/number1.gif')
                 break;
             case('2') :
-                imagePath = require('../../numbers/number2.gif')
+                imagePath = require('../../../numbers/number2.gif')
                 break;
             case('3') :
-                imagePath = require('../../numbers/number3.gif')
+                imagePath = require('../../../numbers/number3.gif')
                 break;
             case('4') :
-                imagePath = require('../../numbers/number4.gif')
+                imagePath = require('../../../numbers/number4.gif')
                 break;
             case('5') :
-                imagePath = require('../../numbers/number5.gif')
+                imagePath = require('../../../numbers/number5.gif')
                 break;
             case('6') :
-                imagePath = require('../../numbers/number6.gif')
+                imagePath = require('../../../numbers/number6.gif')
                 break;
             case('7') :
-                imagePath = require('../../numbers/number7.gif')
+                imagePath = require('../../../numbers/number7.gif')
                 break;
             case('8') :
-                imagePath = require('../../numbers/number8.gif')
+                imagePath = require('../../../numbers/number8.gif')
                 break;
             case('9') :
-                imagePath = require('../../numbers/number9.gif')
+                imagePath = require('../../../numbers/number9.gif')
                 break;
             default :
-                imagePath = require('../../numbers/number0.gif')
+                imagePath = require('../../../numbers/number0.gif')
                 break;
 
         }
         return (
                 <TouchableOpacity style={styles.touchableArea} key={problem_set.ps_id} onPress={() => this.props.navigation.navigate('Round', {
-                        type: '*',
+                        operator: this.state.operator,
                         number: problem_set.number,
                         student: this.props.navigation.getParam('student'),
                         imagePath: imagePath
@@ -65,7 +81,7 @@ render() {
     })
         return (
            <View style={styles.container}>
-            <Text style={{fontSize: 50, marginBottom: 50}}>Multiplication</Text>
+            <Text style={{fontSize: 50, marginBottom: 50}}>{this.state.type}</Text>
             <View style={styles.numberContainer} >
                 {problem_sets}
             </View>
