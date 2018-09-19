@@ -25,7 +25,7 @@ componentDidMount() {
         id = 5;
         break;
     }
-    axios.get('http://10.0.0.74:4000/math/problemsets?id=' + id).then(res => {
+    axios.get('http://192.168.0.4:4000/math/problemsets?id=' + id).then(res => {
         this.setState({ problem_sets: res.data })
     })
 }

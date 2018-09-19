@@ -37,7 +37,6 @@ evaluate = () => {
 }
 scramble() {
     let { operator } = this.props.problem;
-    console.log(operator);
     if (operator === '*' || operator === '+') {
         let random = Math.floor(Math.random() * 2);
         if (random === 1) {
