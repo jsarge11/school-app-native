@@ -65,9 +65,9 @@ render() {
            <View style={styles.container}>
             <Text style={styles.text}>
 
-            {isScrambled ? number2 : number1}{"\n"}
+            {isScrambled ? number2 : number1}{operator !== '÷' ? "\n" : ' '}
             {operator}
-            {isScrambled ? number1 : number2}
+            {isScrambled ? ' ' + number1 : ' ' + number2}
             </Text>
             <TextInput key={this.state.counter}
                 style={styles.input}
