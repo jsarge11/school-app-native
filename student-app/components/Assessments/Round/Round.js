@@ -112,7 +112,7 @@ calculateAnswer = () => {
     }
 }
 selectProblem = () => {
-    let number = Math.floor(Math.random() * 12);
+    let number = Math.floor(Math.random() * 9);
 
     this.setState({ problem: this.state.problems[number]}, () => {
         this.calculateAnswer();
