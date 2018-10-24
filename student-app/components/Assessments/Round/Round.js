@@ -26,7 +26,7 @@ componentDidMount() {
     if (operator === '+') {
         operator = 'plus';
     }
-    axios.get('http://192.168.0.4:4000/math/problems?operator=' + operator + '&number=' + number).then(res => {
+    axios.get('http://10.0.0.75:4000/math/problems?operator=' + operator + '&number=' + number).then(res => {
         this.setState({ problems: res.data, loading: false })
     })
 }
@@ -74,7 +74,7 @@ finishRound = () => {
     }
 
     Alert.alert('your score was ' + score + ' and you got ' + incorrect + ' incorrect');
-    axios.post('http://192.168.0.4:4000/math/score?id=' + student[0].st_id, data).then(() => {
+    axios.post('http://10.0.0.75:4000/math/score?id=' + student[0].st_id, data).then(() => {
         this.setState({ score: 0 });
         this.props.navigation.goBack();
     }).catch(() => Alert.alert('something went wrong, score not logged'))

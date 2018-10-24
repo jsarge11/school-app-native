@@ -7,19 +7,19 @@ export default class LoginScreen extends React.Component {
     constructor() {
         super();
         this.state = {
-          login: '',
+          name: '',
           pin: '',
           loading: false,
         }
       }
       login() {
         this.setState({ loading: true })
-        axios.post('http://192.168.0.4:4000/auth/classroom', this.state).then(res => {
+        axios.post('http://10.0.0.75:4000/auth/classroom', this.state).then(res => {
 
           this.props.navigation.navigate('Home', {
             teacherid: res.data.clsr_id
           });
-          this.setState({ login: '', pin: '', loading: false });
+          this.setState({ name: '', pin: '', loading: false });
         }).catch(error =>  {
           Alert.alert(error.response.data);
           this.setState({ loading: false })
@@ -33,8 +33,8 @@ export default class LoginScreen extends React.Component {
             <TextInput
             autoCapitalize="none"
             style={styles.input}
-            onChangeText={(login) => this.setState({login})}
-            value={this.state.login}
+            onChangeText={(name) => this.setState({name})}
+            value={this.state.name}
             />
             <TextInput
             style={styles.input}
